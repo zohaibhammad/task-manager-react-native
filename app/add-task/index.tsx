@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { View, TextInput, Button } from "react-native";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useTaskRepository } from "@/repositories/TaskRepository";
+import { useTaskRepository } from "@/repositories/TaskRepositoryAPI";
 
 export default function AddTaskScreen() {
     const { id } = useLocalSearchParams<{ id?: string }>();
     const isEditing = Boolean(id);
 
-    const { getTasks, addTask, updateTask } = useTaskRepository();
-    const taskToEdit = isEditing ? getTasks().find((t) => t.id === Number(id)) : null;
+    const { tasks, addTask, updateTask } = useTaskRepository();
+    const taskToEdit = isEditing ? tasks.find((t) => t.id === id) : null;
 
     const [title, setTitle] = useState(taskToEdit?.title || "");
     const router = useRouter();
 
     const handleSubmit = () => {
         if (isEditing) {
-            updateTask({ id: Number(id), title, completed: taskToEdit?.completed ?? false });
+            updateTask({ id: id!, title, completed: taskToEdit?.completed ?? false });
         } else {
-            addTask({ id: Date.now(), title, completed: false });
+            addTask({ title, completed: false });
         }
         router.back();
     };

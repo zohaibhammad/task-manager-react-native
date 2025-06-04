@@ -1,28 +1,25 @@
 import { View, Text, Button, FlatList, TouchableOpacity, Pressable } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
-import { Task, useTaskRepository } from "@/repositories/TaskRepository";
-import { useState, useCallback } from "react";
+import { useTaskRepository } from "@/repositories/TaskRepositoryAPI";
+import { useCallback } from "react";
 import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
     const router = useRouter();
-    const { getTasks, deleteTask, toggleTaskCompleted } = useTaskRepository();
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const { tasks, getTasks, deleteTask, toggleTaskCompleted } = useTaskRepository();
 
     useFocusEffect(
         useCallback(() => {
-            setTasks(getTasks());
+            getTasks();
         }, [getTasks])
     );
 
-    const handleDelete = (id: number) => {
-        deleteTask(id);
-        setTasks(getTasks());
+    const handleDelete = async (id: string) => {
+        await deleteTask(id);
     };
 
-    const handleToggle = (id: number) => {
-        toggleTaskCompleted(id);
-        setTasks(getTasks());
+    const handleToggle = async (id: string) => {
+        await toggleTaskCompleted(id);
     };
 
     return (

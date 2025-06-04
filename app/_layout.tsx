@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { TaskRepositoryProvider } from "@/repositories/TaskRepository";
+import { TaskRepositoryProvider } from "@/repositories/TaskRepositoryAPI";
 
 export default function RootLayout() {
   return (

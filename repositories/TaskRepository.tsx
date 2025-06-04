@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 export type Task = {
-    id: number;
+    id?: number;
     title: string;
     completed: boolean;
 };
