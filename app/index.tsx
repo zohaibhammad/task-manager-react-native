@@ -1,17 +1,18 @@
 import { View, Text, Button, FlatList } from "react-native";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import {Task, useTaskRepository} from "@/repositories/TaskRepository";
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 
 export default function HomeScreen() {
     const router = useRouter();
     const { getTasks } = useTaskRepository();
     const [tasks, setTasks] = useState<Task[]>([]);
 
-    useEffect(() => {
-        setTasks(getTasks());
-        console.log("Hello")
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            setTasks(getTasks());
+        }, [getTasks])
+    );
 
     return (
         <View style={{ flex: 1, padding: 20 }}>
