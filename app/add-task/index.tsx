@@ -3,7 +3,7 @@ import { View, TextInput, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { useTaskRepository } from "@/repositories/TaskRepository";
 
-export default function TaskFormScreen() {
+export default function AddTaskScreen() {
     const [title, setTitle] = useState("");
     const { addTask } = useTaskRepository();
     const router = useRouter();
