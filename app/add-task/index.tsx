@@ -15,9 +15,9 @@ export default function AddTaskScreen() {
 
     const handleSubmit = () => {
         if (isEditing) {
-            updateTask({ id: Number(id), title });
+            updateTask({ id: Number(id), title, completed: taskToEdit?.completed ?? false });
         } else {
-            addTask({ id: Date.now(), title });
+            addTask({ id: Date.now(), title, completed: false });
         }
         router.back();
     };

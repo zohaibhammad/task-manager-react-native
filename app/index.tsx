@@ -1,11 +1,12 @@
-import { View, Text, Button, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, Button, FlatList, TouchableOpacity, Pressable } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { Task, useTaskRepository } from "@/repositories/TaskRepository";
 import { useState, useCallback } from "react";
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
     const router = useRouter();
-    const { getTasks, deleteTask } = useTaskRepository();
+    const { getTasks, deleteTask, toggleTaskCompleted } = useTaskRepository();
     const [tasks, setTasks] = useState<Task[]>([]);
 
     useFocusEffect(
@@ -19,6 +20,11 @@ export default function HomeScreen() {
         setTasks(getTasks());
     };
 
+    const handleToggle = (id: number) => {
+        toggleTaskCompleted(id);
+        setTasks(getTasks());
+    };
+
     return (
         <View style={{ flex: 1, padding: 20 }}>
             <Button title="Add Task" onPress={() => router.push("/add-task")} />
@@ -26,8 +32,17 @@ export default function HomeScreen() {
                 data={tasks}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (
-                    <View style={{ marginTop: 10, flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <Text>{item.title}</Text>
+                    <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
+                            <Pressable onPress={() => handleToggle(item.id)}>
+                                <Ionicons
+                                    name={item.completed ? 'checkbox' : 'square-outline'}
+                                    size={24}
+                                    color={item.completed ? 'green' : 'gray'}
+                                />
+                            </Pressable>
+                            <Text style={{ textDecorationLine: item.completed ? 'line-through' : 'none', marginLeft: 10 }}>{item.title}</Text>
+                        </View>
                         <View style={{ flexDirection: 'row', gap: 10 }}>
                             <TouchableOpacity onPress={() => router.push({ pathname: "/add-task", params: { id: item.id.toString() } })}>
                                 <Text style={{ color: 'blue' }}>Edit</Text>

@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState } from "react";
 export type Task = {
     id: number;
     title: string;
+    completed: boolean;
 };
 
 type TaskContextType = {
@@ -11,6 +12,7 @@ type TaskContextType = {
     addTask: (task: Task) => void;
     deleteTask: (id: number) => void;
     updateTask: (task: Task) => void;
+    toggleTaskCompleted: (id: number) => void;
 };
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
@@ -26,9 +28,16 @@ export const TaskRepositoryProvider: React.FC<{ children: React.ReactNode }> = (
             prev.map((task) => (task.id === updatedTask.id ? updatedTask : task))
         );
     };
+    const toggleTaskCompleted = (id: number) => {
+        setTasks((prev) =>
+            prev.map((task) =>
+                task.id === id ? { ...task, completed: !task.completed } : task
+            )
+        );
+    };
 
     return (
-        <TaskContext.Provider value={{ tasks, getTasks, addTask, deleteTask, updateTask }}>
+        <TaskContext.Provider value={{ tasks, getTasks, addTask, deleteTask, updateTask, toggleTaskCompleted }}>
             {children}
         </TaskContext.Provider>
     );
