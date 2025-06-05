@@ -63,7 +63,7 @@ yarn test --watchAll
 
 ---
 
-## Using json-server (Optional Backend)
+## Using json-server
 
 You can optionally use [json-server](https://github.com/typicode/json-server) to simulate a REST API backend for the tasks. This is useful for development if you want to persist tasks beyond the in-memory store.
 
