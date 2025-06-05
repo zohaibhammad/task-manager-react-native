@@ -1,50 +1,177 @@
-# Welcome to your Expo app 👋
+# 📱 React Native Task Manager
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A simple yet polished task management app built with **Expo**, **TypeScript**, and **React Native**. Users can add, edit, complete, and delete tasks in a clean and user-friendly interface.
 
-## Get started
+---
 
-1. Install dependencies
+## 🚀 Getting Started
 
-   ```bash
-   npm install
-   ```
+### ✅ Prerequisites
 
-2. Start the app
+- [Node.js](https://nodejs.org/) (v18 or above recommended)
+- [Yarn](https://classic.yarnpkg.com/en/docs/install/)
+- [Expo CLI](https://docs.expo.dev/get-started/installation/)
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+Install Expo CLI globally if not already:
 
 ```bash
-npm run reset-project
+npm install -g expo-cli
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+### 📦 Installation
 
-To learn more about developing your project with Expo, look at the following resources:
+1. Clone the repository:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+git clone https://github.com/zohaibhammad/task-manager-react-native.git
+cd task-manager-react-native
+```
 
-## Join the community
+2. Install dependencies:
 
-Join our community of developers creating universal apps.
+```bash
+yarn install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+3. Start the development server:
+
+```bash
+yarn start
+```
+
+Or open with Expo Go app by scanning the QR code.
+
+---
+
+
+
+## 🧪 Running Tests
+
+Unit tests are written using **Jest** and **React Native Testing Library**.
+
+```bash
+yarn test
+```
+
+For watch mode:
+
+```bash
+yarn test --watchAll
+```
+
+---
+
+## Using json-server (Optional Backend)
+
+You can optionally use [json-server](https://github.com/typicode/json-server) to simulate a REST API backend for the tasks. This is useful for development if you want to persist tasks beyond the in-memory store.
+
+### Setup json-server
+
+1. Install json-server globally or as a dev dependency:
+
+```bash
+npm install -g json-server
+# or
+yarn add --dev json-server
+```
+
+2. Create a `db.json` file in your project root with initial data:
+
+```json
+{
+  "tasks": []
+}
+```
+
+3. Start the json-server:
+
+```bash
+json-server --watch db.json --port 3000
+```
+
+This will run a REST API at `http://localhost:3000/tasks` with full CRUD support.
+
+### Connecting Your App
+
+- Use standard REST methods:
+   - GET `/tasks` — get all tasks
+   - POST `/tasks` — add new task
+   - PUT `/tasks/:id` — update a task
+   - DELETE `/tasks/:id` — delete a task
+
+### Notes
+
+- Make sure to run the server before launching your app if you want to use the backend.
+- This setup helps you simulate a backend during development without building a full server.
+
+---
+
+## 🧠 Design Decisions
+
+### 🔹 Tech Stack
+
+- **Expo**: Streamlines the React Native dev workflow.
+- **TypeScript**: For type safety and better DX.
+- **Expo Router**: Enables file-based routing like Next.js.
+- **React Context + Custom Hook**: `useTaskRepository` provides a clean and testable abstraction for managing task data.
+
+---
+
+### 🔹 App Architecture
+
+```
+task-manager/
+├── app/
+│   ├── index.tsx             # Home screen (task list)
+│   ├── add-task/
+│   │       └── styles.tsx    # Add Task Screen styles
+│   │       └── index.tsx     # Add/edit task screen
+│   │       └── __tests__/    # Unit tests
+│   ├── _layout.tsx           # Shared layout with provider
+│   ├── __tests__/            # Unit tests
+│   ├── styles.ts             # Home Screen styles
+├── repositories/
+│           └── TaskRepositoryAPI.tsx
+```
+
+---
+
+### 🔹 Styling
+
+- Consistent use of `StyleSheet.create()` for performance and reusability.
+- Buttons and inputs styled for accessibility and visual clarity.
+- Disabled states and error states clearly indicated.
+
+---
+
+### 🔹 Testing Strategy
+
+- **Unit tests**: Focused on behavior (e.g. task addition, navigation).
+- **React Native Testing Library** used for component rendering and interaction simulation.
+
+---
+
+## ✨ Features
+
+- Add new tasks
+- Edit existing tasks
+- Toggle completion
+- Delete tasks
+- Form validation and disabled state handling
+- Optimistic UI update pattern
+
+---
+
+## 📂 Future Improvements
+
+- Offline sync with local DB
+- Push notifications
+- Authentication and user-specific task lists
+
+---
+
+## 📄 License
+
+MIT License © 2025 Zohaib Hammad
