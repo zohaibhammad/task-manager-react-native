@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, TextInput, TouchableOpacity, Text } from "react-native";
-import {Stack, useLocalSearchParams, useRouter} from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useTaskRepository } from "@/repositories/TaskRepositoryAPI";
 import { styles } from "./styles";
 
