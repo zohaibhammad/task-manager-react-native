@@ -1,8 +1,9 @@
-import { View, Text, Button, FlatList, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Pressable } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { useTaskRepository } from "@/repositories/TaskRepositoryAPI";
 import { useCallback } from "react";
 import { Ionicons } from '@expo/vector-icons';
+import { styles } from "./styles";
 
 export default function HomeScreen() {
     const router = useRouter();
@@ -23,34 +24,45 @@ export default function HomeScreen() {
     };
 
     return (
-        <View style={{ flex: 1, padding: 20 }}>
-            <Button title="Add Task" onPress={() => router.push("/add-task")} />
-            <FlatList
-                data={tasks}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
-                    <View style={{ marginTop: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1 }}>
-                            <Pressable onPress={() => handleToggle(item.id)}>
-                                <Ionicons
-                                    name={item.completed ? 'checkbox' : 'square-outline'}
-                                    size={24}
-                                    color={item.completed ? 'green' : 'gray'}
-                                />
-                            </Pressable>
-                            <Text style={{ textDecorationLine: item.completed ? 'line-through' : 'none', marginLeft: 10 }}>{item.title}</Text>
+        <View style={styles.container}>
+            <TouchableOpacity style={styles.addButton} onPress={() => router.push("/add-task")}>
+                <Text style={styles.addButtonText}>+ Add Task</Text>
+            </TouchableOpacity>
+
+            {tasks.length === 0 ? (
+                <Text style={styles.emptyText}>No tasks found. Add your first one!</Text>
+            ) : (
+                <FlatList
+                    data={tasks}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <View style={styles.taskCard}>
+                            <View style={styles.taskLeft}>
+                                <Pressable onPress={() => handleToggle(item.id)}>
+                                    <Ionicons
+                                        name={item.completed ? 'checkbox' : 'square-outline'}
+                                        size={24}
+                                        color={item.completed ? '#4CAF50' : '#999'}
+                                    />
+                                </Pressable>
+                                <Text
+                                    style={[styles.taskText, item.completed && styles.taskCompleted]}
+                                >
+                                    {item.title}
+                                </Text>
+                            </View>
+                            <View style={styles.taskActions}>
+                                <TouchableOpacity style={styles.editButton} onPress={() => router.push({ pathname: "/add-task", params: { id: item.id.toString() } })}>
+                                    <Text style={styles.buttonText}>Edit</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
+                                    <Text style={styles.buttonText}>Delete</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', gap: 10 }}>
-                            <TouchableOpacity onPress={() => router.push({ pathname: "/add-task", params: { id: item.id.toString() } })}>
-                                <Text style={{ color: 'blue' }}>Edit</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => handleDelete(item.id)}>
-                                <Text style={{ color: 'red' }}>Delete</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                )}
-            />
+                    )}
+                />
+            )}
         </View>
     );
 }
