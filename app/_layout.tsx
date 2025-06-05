@@ -6,7 +6,7 @@ export default function RootLayout() {
       <TaskRepositoryProvider>
         <Stack>
           <Stack.Screen name="index" options={{ title: "My Tasks" }} />
-          <Stack.Screen name="add-task/index" options={{ title: "Add New Task" }} />
+          <Stack.Screen name="add-task/index" />
         </Stack>
       </TaskRepositoryProvider>
   );

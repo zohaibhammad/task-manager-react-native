@@ -34,7 +34,6 @@ export const TaskRepositoryProvider: React.FC<{ children: React.ReactNode }> = (
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(task),
         });
-        console.log("New task:");
         const newTask = await res.json();
         setTasks((prev) => [...prev, newTask]);
     };
