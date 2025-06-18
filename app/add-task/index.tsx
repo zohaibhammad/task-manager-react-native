@@ -16,15 +16,15 @@ export default function AddTaskScreen() {
     const router = useRouter();
     const isDisabled = !title.trim();
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (!title.trim()) {
             setError("Task title cannot be empty.");
             return;
         }
         if (isEditing) {
-            updateTask({ id: id!, title: title.trim(), completed: taskToEdit?.completed ?? false });
+            await updateTask({ id: id!, title: title.trim(), completed: taskToEdit?.completed ?? false });
         } else {
-            addTask({ title: title.trim(), completed: false });
+            await addTask({ title: title.trim(), completed: false });
         }
         router.back();
     };

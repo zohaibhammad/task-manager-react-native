@@ -17,7 +17,7 @@ type TaskContextType = {
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
-const API_URL = "http://172.20.10.5:3000/tasks";
+const API_URL = `${process.env.EXPO_PUBLIC_API_URL}/tasks`;
 
 export const TaskRepositoryProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [tasks, setTasks] = useState<Task[]>([]);

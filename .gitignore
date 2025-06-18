@@ -8,4 +8,5 @@ yarn-error.log
 .idea
 .expo
 app-example
+.env
 # @end expo-cli

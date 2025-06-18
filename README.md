@@ -95,6 +95,8 @@ This will run a REST API at `http://localhost:3000/tasks` with full CRUD support
 
 ### Connecting Your App
 
+- Add a `.env` file to your project root with the following content:
+   - `EXPO_PUBLIC_API_URL=http://<your-ip-address>:3000`
 - Use standard REST methods:
    - GET `/tasks` — get all tasks
    - POST `/tasks` — add new task
