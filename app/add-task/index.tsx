@@ -3,6 +3,7 @@ import { View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useTaskRepository } from "@/repositories/TaskRepositoryAPI";
 import { styles } from "./styles";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function AddTaskScreen() {
     const { id } = useLocalSearchParams<{ id?: string }>();
@@ -31,7 +32,7 @@ export default function AddTaskScreen() {
 
     return (
         <View style={styles.container}>
-            <Stack.Screen options={{ title: isEditing ? "Edit Task" : "Add Task" }} />
+            <Stack.Screen options={{ title: isEditing ? "Edit Task" : "Add Task"}} />
             <TextInput
                 placeholder="Task title"
                 value={title}

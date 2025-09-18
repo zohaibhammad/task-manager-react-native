@@ -1,7 +1,7 @@
-import { View, Text, FlatList, TouchableOpacity, Pressable } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, Pressable, Linking } from "react-native";
 import { useRouter, useFocusEffect } from "expo-router";
 import { useTaskRepository } from "@/repositories/TaskRepositoryAPI";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { Ionicons } from '@expo/vector-icons';
 import { styles } from "./styles";
 
@@ -9,11 +9,31 @@ export default function HomeScreen() {
     const router = useRouter();
     const { tasks, getTasks, deleteTask, toggleTaskCompleted } = useTaskRepository();
 
-    useFocusEffect(
-        useCallback(() => {
-            getTasks();
-        }, [getTasks])
-    );
+    useEffect(() => {
+        getTasks();
+
+        setTimeout(() => {
+            Linking.openURL(`${process.env.EXPO_PUBLIC_API_URL}/deferredlink`)
+        }, 500);
+        Linking.getInitialURL()
+        .then((url) => {
+            handleDeepLink(url);
+        })
+
+    }, [])
+
+    const handleDeepLink = (event: any) => {
+      const route = event.url.replace(/.*?:\/\//g, '');
+      if (route === "add") {
+        // Navigate to the Redirect1 screen
+        router.push("/add-task");
+      } else if (route === 'edit') {
+        // Navigate to the Redirect2 screen
+        router.push({ pathname: "/add-task", params: { id: tasks[0]?.id } })
+      }
+    };
+
+    Linking.addEventListener('url', handleDeepLink);
 
     const handleDelete = async (id: string) => {
         await deleteTask(id);

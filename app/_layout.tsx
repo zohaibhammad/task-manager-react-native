@@ -1,6 +1,11 @@
 import { Stack } from "expo-router";
 import { TaskRepositoryProvider } from "@/repositories/TaskRepositoryAPI";
 
+export const unstable_settings = {
+  // Ensure any route can link back to `/`
+  initialRouteName: 'index',
+};
+
 export default function RootLayout() {
   return (
       <TaskRepositoryProvider>
